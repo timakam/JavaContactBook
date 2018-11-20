@@ -2,6 +2,7 @@ package org.itstep.msk;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.stream.Collectors;
 
 /**
  * Application main class
@@ -14,12 +15,15 @@ public class App {
      * To print out contacts
      * Defines the main abstractions needed to do the job
      *
-     * @param contacts Iterable with contacts
+     * @param contactFormatters Iterable with contacts
      * @param writeTo PrintWriter to write to
      * */
-    private static void printContacts(Iterable<Contact> contacts, PrintWriter writeTo) {
-        for (Contact c : contacts)
-            writeTo.printf("%-30s    %-18s"+System.lineSeparator(),c.getName(),c.getPhone());
+    private static void printContacts(Iterable<ContactFormatter> contactFormatters, PrintWriter writeTo) {
+        for (ContactFormatter cf : contactFormatters) {
+            cf.print(writeTo);
+            writeTo.println();
+        }
+        writeTo.flush();
     }
 
     public static void main( String[] args ) {
@@ -36,12 +40,14 @@ public class App {
         contacts.add(new Contact("Hercule Poirot","8 800 900 99 99"));
         contacts.add(new Contact("Mary Debenham","+19 900 999 99 99"));
         contacts.add(new Contact("Mrs. Hubbard","+23 900 999-99-99"));
-
-        Iterable<Contact> iterableContacts = contacts;
+//=======================================================================================
+        Iterable<ContactFormatter> contactFormatters = contacts.stream()
+                .map(x->new StringContactFormatter(x,18,20))
+                .collect(Collectors.toList());
         PrintWriter writeTo = new PrintWriter(System.out);
 //=======================================================================================
 
-        printContacts(iterableContacts,writeTo);
+        printContacts(contactFormatters,writeTo);
 
     }
 }
