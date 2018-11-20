@@ -1,5 +1,6 @@
 package org.itstep.msk;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**
@@ -9,6 +10,18 @@ import java.util.ArrayList;
  * @version 1.0
  */
 public class App {
+    /**
+     * To print out contacts
+     * Defines the main abstractions needed to do the job
+     *
+     * @param contacts Iterable with contacts
+     * @param writeTo PrintWriter to write to
+     * */
+    private static void printContacts(Iterable<Contact> contacts, PrintWriter writeTo) {
+        for (Contact c : contacts)
+            writeTo.printf("%-30s    %-18s"+System.lineSeparator(),c.getName(),c.getPhone());
+    }
+
     public static void main( String[] args ) {
         ArrayList<Contact> contacts = new ArrayList<>(16);
         contacts.add(new Contact("Павел Иванович Чичиков","+13(900)999-99-99"));
@@ -24,8 +37,11 @@ public class App {
         contacts.add(new Contact("Mary Debenham","+19 900 999 99 99"));
         contacts.add(new Contact("Mrs. Hubbard","+23 900 999-99-99"));
 
-        ArrayList<Contact> toPrintOut = contacts;
-        for (Contact c : toPrintOut)
-            System.out.printf("%-30s    %-18s"+System.lineSeparator(),c.getName(),c.getPhone());
+        Iterable<Contact> iterableContacts = contacts;
+        PrintWriter writeTo = new PrintWriter(System.out);
+//=======================================================================================
+
+        printContacts(iterableContacts,writeTo);
+
     }
 }
