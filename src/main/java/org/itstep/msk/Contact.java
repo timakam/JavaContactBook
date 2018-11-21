@@ -6,7 +6,7 @@ package org.itstep.msk;
  * @author Марк Михайлович
  * @version 1.0
  * */
-public class Contact {
+public final class Contact {
     private final String name;
     private final String phone;
 

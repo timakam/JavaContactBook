@@ -8,7 +8,7 @@ import java.io.PrintWriter;
  * @author Марк Михайлович
  * @version 1.0
  * */
-public class StringContactFormatter implements ContactFormatter{
+public final class StringContactFormatter implements ContactFormatter{
     private final Contact origin;
     private final int nameLength, phoneLength;
 

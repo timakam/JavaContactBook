@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  * @author Марк Михайлович
  * @version 1.0
  */
-public class App {
+public final class App {
     /**
      * To print out contacts
      * Defines the main abstractions needed to do the job
