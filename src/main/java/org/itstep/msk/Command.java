@@ -2,6 +2,9 @@ package org.itstep.msk;
 
 /**
  * Declares the type of the executable object
+ *
+ * @author Марк Михайлович
+ * @version 1.0
  * */
 @FunctionalInterface
 public interface Command {
