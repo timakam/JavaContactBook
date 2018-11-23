@@ -26,5 +26,6 @@ public class OnWrongCommand implements Command {
     @Override
     public void exec() throws IOException {
         writeTo.write(text);
+        writeTo.flush();
     }
 }
