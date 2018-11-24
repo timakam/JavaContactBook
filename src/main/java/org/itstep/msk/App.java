@@ -44,6 +44,8 @@ public final class App {
 
 //=======================================================================================
         SimpleContactBook contactBook = new ArrayContactBook(contacts);
+        SimpleContactBook contactBook1 = new FileContactBook(contacts,"./FileContactBook.txt");
+        contactBook1.commit();
 //=======================================================================================
 
         printContacts(
@@ -52,6 +54,11 @@ public final class App {
                         .collect(Collectors.toList())
                 ,new PrintWriter(System.out)
         );
-
+        printContacts(
+                StreamSupport.stream(contactBook1.read().spliterator(),true)
+                        .map(x->new StringContactFormatter(x,18,20))
+                        .collect(Collectors.toList())
+                ,new PrintWriter(System.out)
+        );
     }
 }
