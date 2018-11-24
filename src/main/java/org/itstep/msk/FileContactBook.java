@@ -4,6 +4,14 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Stream;
 
+/**
+ * The implementation of the contact file-repository
+ * It stores the data in some file given and can retrieve contacts from file
+ *
+ * @author BogdanovaAnastasia
+ * @version 1.0
+ * */
+
 public final class FileContactBook implements SimpleContactBook {
     private final ArrayList<Contact> contacts;
     private final String fileName;
