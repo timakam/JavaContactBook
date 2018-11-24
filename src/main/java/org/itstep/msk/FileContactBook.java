@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 public final class FileContactBook implements SimpleContactBook {
     private final ArrayList<Contact> contacts;
     private final String fileName;
+    private final String splitItem = " %% ";
 
     public FileContactBook(final ArrayList<Contact> contacts, final String fileName) {
         this.contacts = contacts;
@@ -39,7 +40,7 @@ public final class FileContactBook implements SimpleContactBook {
             contactsFromFile.clear();
             Stream<String> contactVals = reader.lines();
             contactVals.forEach(x -> {
-                String[] vals = x.split(" %% ");
+                String[] vals = x.split(splitItem);
                 contactsFromFile.add(new Contact(vals[0], vals[1]));
             });
         } catch (IOException e) {
@@ -51,7 +52,7 @@ public final class FileContactBook implements SimpleContactBook {
     @Override
     public SimpleContactBook commit() {
         try (PrintWriter printer = new PrintWriter(fileName)) {
-            contacts.stream().forEach((x -> new FileContactFormatter(x).print(printer)));
+            contacts.stream().forEach((x -> new FileContactFormatter(x,splitItem).print(printer)));
             printer.flush();
         } catch (IOException e) {
             System.out.println("Ошибка при работе с файлами: " + e.getMessage());

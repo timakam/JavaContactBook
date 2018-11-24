@@ -11,9 +11,11 @@ import java.io.PrintWriter;
 
 public final class FileContactFormatter implements ContactFormatter {
     private final Contact origin;
+    private final String splitItem;
 
-    public FileContactFormatter(Contact origin) {
+    public FileContactFormatter(Contact origin,String splitItem) {
         this.origin = origin;
+        this.splitItem = splitItem;
     }
 
     /**
@@ -24,7 +26,7 @@ public final class FileContactFormatter implements ContactFormatter {
 
     @Override
     public void print(PrintWriter writeToFile) {
-        writeToFile.write(origin.getName() + " %% " + origin.getPhone());
+        writeToFile.write(origin.getName() + splitItem + origin.getPhone());
         writeToFile.println();
     }
 }
