@@ -2,8 +2,6 @@ package org.itstep.msk;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -47,10 +45,8 @@ public final class App {
 //=======================================================================================
         SimpleContactBook contactBook = new ArrayContactBook(contacts);
 //=======================================================================================
+        AbstractDecorator decorator = new ConcreteDecorator(contacts);
+        printContacts(decorator.contactFormatter(),new PrintWriter(System.out));
 //=======================================================================================
-        Decorator decorator = new StringDecorator(new StringContactFormatterFactory(contactBook));
-        printContacts(decorator.getContactFormatters(),new PrintWriter(System.out));
-//=======================================================================================
-
     }
 }
