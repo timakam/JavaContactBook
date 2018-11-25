@@ -45,8 +45,10 @@ public final class App {
 //=======================================================================================
         SimpleContactBook contactBook = new ArrayContactBook(contacts);
 //=======================================================================================
-        AbstractDecorator decorator = new ConcreteDecorator(contacts);
-        printContacts(decorator.contactFormatter(),new PrintWriter(System.out));
 //=======================================================================================
+        Iterable<ContactFormatter> decoracor = new ContactFormatterIterableDecorator(contactBook.read());
+        printContacts(decoracor,new PrintWriter(System.out));
+//=======================================================================================
+
     }
 }
