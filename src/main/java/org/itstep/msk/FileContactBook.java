@@ -24,7 +24,7 @@ public final class FileContactBook implements SimpleContactBook {
     @Override
     public Contact create(String name, String phoneNumber) {
         contacts.add(new Contact(name, phoneNumber));
-        return null;
+        return contacts.get(contacts.size()-1);
     }
 
     @Override
@@ -45,8 +45,11 @@ public final class FileContactBook implements SimpleContactBook {
             } catch (IOException e) {
                 throw new RuntimeException("Ошибка при работе с файлами", e);
             }
-        } else System.out.println("File is not found");
-        return Collections.unmodifiableCollection(contacts);
+            return Collections.unmodifiableCollection(contacts);
+        } else {
+            System.out.println("File is not found");
+            return Collections.emptyList();
+        }
     }
 
     @Override
