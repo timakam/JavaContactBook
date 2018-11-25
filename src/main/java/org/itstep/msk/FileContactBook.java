@@ -22,29 +22,34 @@ public final class FileContactBook implements SimpleContactBook {
     }
 
     @Override
-    public Contact create(String name, String phoneNumber) { //?
-        return null;
+    public Contact create(String name, String phoneNumber) {
+        contacts.add(new Contact(name, phoneNumber));
+        return contacts.get(contacts.size()-1);
     }
 
     @Override
-    public SimpleContactBook delete(Contact c) { //?
+    public SimpleContactBook delete(Contact c) {
+        contacts.remove(c);
         return null;
     }
 
     @Override
     public Iterable<Contact> read() {
-        ArrayList<Contact> contactsFromFile = new ArrayList<>();
-        contactsFromFile.add(new Contact("Ace", "888"));
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            contactsFromFile.clear();
-            reader.lines().forEach(x -> {
-                String[] vals = x.split(splitItem);
-                contactsFromFile.add(new Contact(vals[0], vals[1]));
-            });
-        } catch (IOException e) {
-            System.out.println("Ошибка при работе с файлами: " + e.getMessage());
+        if (new File(fileName).exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                contacts.clear();
+                reader.lines().forEach(x -> {
+                    String[] vals = x.split(splitItem);
+                    contacts.add(new Contact(vals[0], vals[1]));
+                });
+            } catch (IOException e) {
+                throw new RuntimeException("Ошибка при работе с файлами", e);
+            }
+            return Collections.unmodifiableCollection(contacts);
+        } else {
+            System.out.println("File is not found");
+            return Collections.emptyList();
         }
-        return Collections.unmodifiableCollection(contactsFromFile);
     }
 
     @Override
@@ -53,7 +58,7 @@ public final class FileContactBook implements SimpleContactBook {
             contacts.forEach((x -> new FileContactFormatter(x, splitItem).print(printer)));
             printer.flush();
         } catch (IOException e) {
-            System.out.println("Ошибка при работе с файлами: " + e.getMessage());
+            throw new RuntimeException("Ошибка при работе с файлами", e);
         }
         return null;
     }

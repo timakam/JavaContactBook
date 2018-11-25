@@ -43,9 +43,11 @@ public final class App {
         contacts.add(new Contact("Mrs. Hubbard","+23 900 999-99-99"));
 
 //=======================================================================================
+        Contact test = new Contact("Andy","888");
+        contacts.add(test);
+
         SimpleContactBook contactBook = new ArrayContactBook(contacts);
         SimpleContactBook contactBook1 = new FileContactBook(contacts,"./FileContactBook.txt");
-        contactBook1.commit();
 //=======================================================================================
 
         printContacts(
@@ -55,6 +57,11 @@ public final class App {
                 ,new PrintWriter(System.out)
         );
         System.out.println();
+
+        contactBook1.create("Vasya","8 495 999-99-99");
+        contactBook1.delete(test);
+        contactBook1.commit();
+
         printContacts(
                 StreamSupport.stream(contactBook1.read().spliterator(),true)
                         .map(x->new StringContactFormatter(x,18,20))
