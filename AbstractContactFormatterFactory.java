@@ -1,6 +1,6 @@
 package org.itstep.msk;
 
-    interface AbstractContactFormatterFactory {
+public interface AbstractContactFormatterFactory {
 
-        Iterable<ContactFormatter> createContactFormatter();
+    ContactFormatter getContactFormatter(Contact origin);
 }
