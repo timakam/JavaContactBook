@@ -22,29 +22,29 @@ public final class FileContactBook implements SimpleContactBook {
     }
 
     @Override
-    public Contact create(String name, String phoneNumber) { //?
+    public Contact create(String name, String phoneNumber) {
+        contacts.add(new Contact(name,phoneNumber));
         return null;
     }
 
     @Override
     public SimpleContactBook delete(Contact c) { //?
+        contacts.remove(c);
         return null;
     }
 
     @Override
     public Iterable<Contact> read() {
-        ArrayList<Contact> contactsFromFile = new ArrayList<>();
-        contactsFromFile.add(new Contact("Ace", "888"));
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            contactsFromFile.clear();
+            contacts.clear();
             reader.lines().forEach(x -> {
                 String[] vals = x.split(splitItem);
-                contactsFromFile.add(new Contact(vals[0], vals[1]));
+                contacts.add(new Contact(vals[0], vals[1]));
             });
         } catch (IOException e) {
             System.out.println("Ошибка при работе с файлами: " + e.getMessage());
         }
-        return Collections.unmodifiableCollection(contactsFromFile);
+        return Collections.unmodifiableCollection(contacts);
     }
 
     @Override
