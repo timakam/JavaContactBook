@@ -23,7 +23,7 @@ public final class FileContactBook implements SimpleContactBook {
 
     @Override
     public Contact create(String name, String phoneNumber) {
-        contacts.add(new Contact(name,phoneNumber));
+        contacts.add(new Contact(name, phoneNumber));
         return null;
     }
 
@@ -34,16 +34,18 @@ public final class FileContactBook implements SimpleContactBook {
     }
 
     @Override
-    public Iterable<Contact> read(){
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            contacts.clear();
-            reader.lines().forEach(x -> {
-                String[] vals = x.split(splitItem);
-                contacts.add(new Contact(vals[0], vals[1]));
-            });
-        } catch (IOException e) {
-            throw new RuntimeException("Ошибка при работе с файлами",e);
-        }
+    public Iterable<Contact> read() {
+        if (new File(fileName).exists()) {
+            try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
+                contacts.clear();
+                reader.lines().forEach(x -> {
+                    String[] vals = x.split(splitItem);
+                    contacts.add(new Contact(vals[0], vals[1]));
+                });
+            } catch (IOException e) {
+                throw new RuntimeException("Ошибка при работе с файлами", e);
+            }
+        } else System.out.println("File is not found");
         return Collections.unmodifiableCollection(contacts);
     }
 
@@ -53,7 +55,7 @@ public final class FileContactBook implements SimpleContactBook {
             contacts.forEach((x -> new FileContactFormatter(x, splitItem).print(printer)));
             printer.flush();
         } catch (IOException e) {
-            throw new RuntimeException("Ошибка при работе с файлами",e);
+            throw new RuntimeException("Ошибка при работе с файлами", e);
         }
         return null;
     }
