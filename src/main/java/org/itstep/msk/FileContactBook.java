@@ -28,13 +28,13 @@ public final class FileContactBook implements SimpleContactBook {
     }
 
     @Override
-    public SimpleContactBook delete(Contact c) { //?
+    public SimpleContactBook delete(Contact c) {
         contacts.remove(c);
         return null;
     }
 
     @Override
-    public Iterable<Contact> read() {
+    public Iterable<Contact> read(){
         try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
             contacts.clear();
             reader.lines().forEach(x -> {
@@ -42,7 +42,7 @@ public final class FileContactBook implements SimpleContactBook {
                 contacts.add(new Contact(vals[0], vals[1]));
             });
         } catch (IOException e) {
-            System.out.println("Ошибка при работе с файлами: " + e.getMessage());
+            throw new RuntimeException("Ошибка при работе с файлами",e);
         }
         return Collections.unmodifiableCollection(contacts);
     }
@@ -53,7 +53,7 @@ public final class FileContactBook implements SimpleContactBook {
             contacts.forEach((x -> new FileContactFormatter(x, splitItem).print(printer)));
             printer.flush();
         } catch (IOException e) {
-            System.out.println("Ошибка при работе с файлами: " + e.getMessage());
+            throw new RuntimeException("Ошибка при работе с файлами",e);
         }
         return null;
     }
