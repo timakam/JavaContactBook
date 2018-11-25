@@ -46,7 +46,8 @@ public final class App {
         SimpleContactBook contactBook = new ArrayContactBook(contacts);
 //=======================================================================================
 //=======================================================================================
-        Iterable<ContactFormatter> decoracor = new ContactFormatterIterableDecorator(contactBook.read());
+        StringContactFormatterFactory factory = new StringContactFormatterFactory(18,20);
+        Iterable<ContactFormatter> decoracor = new ContactFormatterIterableDecorator(contactBook.read(),factory);
         printContacts(decoracor,new PrintWriter(System.out));
 //=======================================================================================
 
