@@ -13,6 +13,7 @@ import java.util.Collections;
  * */
 public final class ArrayContactBook implements SimpleContactBook {
     private final ArrayList<Contact> contacts;
+    public Contact ContactVar;
 
     public ArrayContactBook(ArrayList<Contact> contacts) {
         this.contacts = contacts;
@@ -38,5 +39,26 @@ public final class ArrayContactBook implements SimpleContactBook {
     @Override
     public SimpleContactBook commit() {
         return null;
+    }
+
+    @Override
+    public SimpleContactBook FindByPhone(String Number)
+    {
+        ArrayList<Contact> FoundContacts = new ArrayList<>();
+
+        for (int i = 0; i < contacts.size(); i++)
+        {
+            ContactVar = contacts.get(i);
+
+            for (int j = 0; j < ContactVar.getPhone().length(); j++)
+            {
+                if ( Number == ContactVar.getPhone().subSequence(j,Number.length()) )
+                    FoundContacts.add(ContactVar);
+            }
+        }
+
+        SimpleContactBook Book = new ArrayContactBook(FoundContacts);
+        return Book;
+
     }
 }

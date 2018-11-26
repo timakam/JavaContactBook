@@ -4,6 +4,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
+import java.util.Scanner;
 
 /**
  * Application main class
@@ -47,11 +48,29 @@ public final class App {
 //=======================================================================================
 
         printContacts(
-                StreamSupport.stream(contactBook.read().spliterator(),true)
+            StreamSupport.stream(contactBook.read().spliterator(),true)
+            .map(x->new StringContactFormatter(x,18,20))
+            .collect(Collectors.toList())
+            ,new PrintWriter(System.out)
+        );
+
+
+        Scanner scanner = new Scanner(System.in);
+        String test = scanner.nextLine();
+
+        printContacts(
+                StreamSupport.stream(contactBook.FindByPhone(test).read().spliterator(),true)
                         .map(x->new StringContactFormatter(x,18,20))
                         .collect(Collectors.toList())
                 ,new PrintWriter(System.out)
         );
 
+
+
     }
+
+
+
+
+
 }

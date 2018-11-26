@@ -14,4 +14,5 @@ public interface SimpleContactBook {
     SimpleContactBook delete(Contact c);
     Iterable<Contact> read();
     SimpleContactBook commit();
+    SimpleContactBook FindByPhone(String Number);
 }
